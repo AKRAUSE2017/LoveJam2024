@@ -48,10 +48,8 @@ function love.load() -- happens when the game starts
     -- application for web browser (name pending) application
     applications["web_browser"] = {
        icon=Icon(10, 110, FOLDER_ICON_W, FOLDER_ICON_H, "IE", love.graphics.newImage("assets/web.png")),
-       window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "IE", love.graphics.newImage("assets/web_screen.png"), 
-           {love.graphics.newImage("assets/file_explorer_screen.png"),
-           love.graphics.newImage("assets/web_screen.png"),
-           love.graphics.newImage("assets/web_screen_border.png")}, -- list of screens
+       window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "IE", love.graphics.newImage("assets/LightBrowserWindow.png"), 
+           {}, -- list of screens
            {Button(75, 75, 50, 20, "blue button", love.graphics.newImage("assets/generic_button.png")),
            Button(75, 150, 50, 20, "pink button", love.graphics.newImage("assets/generic_button.png"))} -- list of buttons
        )
