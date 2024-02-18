@@ -24,12 +24,38 @@ function love.load() -- happens when the game starts
 
     -- application for folder and file explorer
     applications["folder"] = {
-        icon=Icon(10, 10, FOLDER_ICON_W, FOLDER_ICON_H, "test", love.graphics.newImage("assets/folder.png")),
-        window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "window", love.graphics.newImage("assets/file_explorer.png"), 
+        icon=Icon(10, 10, FOLDER_ICON_W, FOLDER_ICON_H, "Folder", love.graphics.newImage("assets/folder.png")),
+        window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "Shared Folder", love.graphics.newImage("assets/file_explorer.png"), 
             {love.graphics.newImage("assets/file_explorer_screen.png")}, -- list of screens
-            {Button(75, 75, 50, 20, "test button", love.graphics.newImage("assets/file_explorer_button.png"))} -- list of buttons
+            {Button(75, 75, 50, 20, "test button", love.graphics.newImage("assets/generic_button.png"))} -- list of buttons
         )
     }
+
+    -- application for email and email window(?)
+    applications["email"] = {
+        icon=Icon(10, 60, FOLDER_ICON_W, FOLDER_ICON_H, "Email", love.graphics.newImage("assets/email.png")),
+        window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "Email", love.graphics.newImage("assets/file_explorer.png"), 
+            {love.graphics.newImage("assets/file_explorer_screen.png"),
+            love.graphics.newImage("assets/email_clicked_screen.png"),
+            love.graphics.newImage("assets/email_clicked_screen2.png")}, -- list of screens
+            {Button(75, 75, 50, 20, "tab button 1", love.graphics.newImage("assets/generic_button.png")),
+            Button(150, 75, 50, 20, "tab button 2", love.graphics.newImage("assets/generic_button.png")),
+            Button(75, 150, 50, 20, "message 1 button"),
+            Button(75, 300, 50, 20, "message 2 button")} -- list of buttons
+        )
+    } 
+
+    -- application for web browser (name pending) application
+    applications["web_browser"] = {
+       icon=Icon(10, 110, FOLDER_ICON_W, FOLDER_ICON_H, "IE", love.graphics.newImage("assets/web.png")),
+       window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "IE", love.graphics.newImage("assets/web_screen.png"), 
+           {love.graphics.newImage("assets/file_explorer_screen.png"),
+           love.graphics.newImage("assets/web_screen.png"),
+           love.graphics.newImage("assets/web_screen_border.png")}, -- list of screens
+           {Button(75, 75, 50, 20, "blue button", love.graphics.newImage("assets/generic_button.png")),
+           Button(75, 150, 50, 20, "pink button", love.graphics.newImage("assets/generic_button.png"))} -- list of buttons
+       )
+    } 
 end
 
 function love.resize(w,h)
@@ -43,6 +69,8 @@ function love.draw() -- render objects on screen
 
     for _, application in pairs(applications) do
         application.icon:render()
+    end
+    for _, application in pairs(applications) do
         application.window:render()
     end
 
@@ -72,7 +100,7 @@ function handle_screen_button_click(mouse)
     for application_name, application in pairs(applications) do
         for _, button in pairs(application.window.buttons) do
             if utils_collision(button, mouse) then
-                button:clicked(application_name)
+                button:clicked(application_name, application)
             end 
         end
     end

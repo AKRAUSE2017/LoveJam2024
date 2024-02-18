@@ -13,6 +13,11 @@ function Window:init(x, y, w, h, name, image, screens, buttons)
     self.image = image -- skeleton image
 
     self.screens = screens -- list of images
+    self.screens_display = {}
+    for _,_ in pairs (self.screens) do
+        table.insert(self.screens_display, 0)
+    end
+    self.screens_display[1] = 1
     self.buttons = buttons -- list of button objects 
 
     self.visible = false
@@ -26,9 +31,11 @@ function Window:render()
         love.graphics.setColor(255/255, 0/255, 0/255)
         love.graphics.rectangle("fill", self.x + self.w - 15, self.y+5, 10, 10)
 
-        for _, screen in pairs(self.screens) do
-            love.graphics.setColor(255/255, 255/255, 255/255)
-            love.graphics.draw(screen, self.x, self.y+20)
+        for index, screen in pairs(self.screens) do
+            if self.screens_display[index] == 1 then
+                love.graphics.setColor(255/255, 255/255, 255/255)
+                love.graphics.draw(screen, self.x, self.y+20)
+            end
         end
 
         for _, button in pairs(self.buttons) do
