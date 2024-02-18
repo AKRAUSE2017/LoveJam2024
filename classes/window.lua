@@ -3,28 +3,38 @@ require('helpers.utils')
 
 Window = Class{}
 
-function Window:init(x, y, w, h, name)
+function Window:init(x, y, w, h, name, image, screens, buttons)
     self.x = x
     self.y = y
     self.w = w
     self.h = h
 
     self.name = name
-    self.state = "idle"
+    self.image = image -- skeleton image
+
+    self.screens = screens -- list of images
+    self.buttons = buttons -- list of button objects 
+
+    self.visible = false
 end
 
 function Window:render()
-    love.graphics.setColor(236/255, 243/255, 247/255)
-    love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    if self.visible then
+        love.graphics.setColor(255/255, 255/255, 255/255)
+        love.graphics.draw(self.image, self.x, self.y)
 
-    love.graphics.setColor(35/255, 87/255, 218/255)
-    love.graphics.rectangle("fill", self.x, self.y, self.w, 20)
+        love.graphics.setColor(255/255, 0/255, 0/255)
+        love.graphics.rectangle("fill", self.x + self.w - 15, self.y+5, 10, 10)
 
-    love.graphics.setColor(255/255, 255/255, 255/255)
-    love.graphics.print(self.name, self.x + 5, self.y + 2)
+        for _, screen in pairs(self.screens) do
+            love.graphics.setColor(255/255, 255/255, 255/255)
+            love.graphics.draw(screen, self.x, self.y+20)
+        end
 
-    love.graphics.setColor(255/255, 0/255, 0/255)
-    love.graphics.rectangle("fill", self.x + self.w - 15, self.y+5, 10, 10)
+        for _, button in pairs(self.buttons) do
+            button:render()
+        end
+    end
 end
 
 function Window:close(mouse_data)
@@ -33,22 +43,4 @@ function Window:close(mouse_data)
     if utils_collision(close_button, mouse_data) and mouse_data.button_1 then
         return true
     else return false end
-end
-
-function Window:set_state(mouse_data, last_mouse_data)
-    if not mouse_data.button_1 then
-        self.state = "idle"
-    end
-
-    local window_bar = {x=self.x, y=self.y, w=self.w, h=20}
-    if utils_collision(window_bar, mouse_data) and mouse_data.button_1 and (not (last_mouse_data.x == mouse_data.x)) and (not (last_mouse_data.y == mouse_data.y)) then
-        self.state = "attached"
-    end
-end
-
-function Window:update(mouse_data)
-    if self.state == "attached" then
-        self.x = mouse_data.x - self.w/2
-        self.y = mouse_data.y - 20/2
-    end
 end

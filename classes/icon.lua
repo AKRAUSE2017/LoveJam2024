@@ -1,28 +1,30 @@
 require('helpers.constants')
 require('helpers.utils')
 
-Folder = Class{}
+Icon = Class{}
 
-function Folder:init(x, y, w, h, name)
+function Icon:init(x, y, w, h, name, image)
     self.x = x
     self.y = y
     self.w = w
     self.h = h
 
     self.name = name
+    self.image = image
 
     self.state = "idle"
 end
 
-function Folder:render()
-    love.graphics.setColor(65/255, 148/255, 232/255)
-    love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+function Icon:render()
+    love.graphics.setColor(255/255, 255/255, 255/255)
+    -- love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    love.graphics.draw(self.image, self.x, self.y)
 
     love.graphics.setColor(255/255, 255/255, 255/255)
-    love.graphics.print(self.name, self.x, self.y + self.h + FOLDER_NAME_OFFSET)
+    love.graphics.print(self.name, self.x, self.y + self.h + ICON_NAME_OFFSET)
 end
 
-function Folder:set_state(mouse_data, last_mouse_data)
+function Icon:set_state(mouse_data, last_mouse_data)
     if not mouse_data.button_1 then
         self.state = "idle"
     end
@@ -32,7 +34,7 @@ function Folder:set_state(mouse_data, last_mouse_data)
     end
 end
 
-function Folder:update(mouse_data)
+function Icon:update(mouse_data)
     if self.state == "attached" then
         self.x = mouse_data.x - self.w/2
         self.y = mouse_data.y - self.h/2
