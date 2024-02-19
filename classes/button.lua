@@ -62,6 +62,11 @@ function Button:clicked(application_name, application)
 
         if self.name == "web_close" then
             application.window.screens_display = {1, 0, 0, 0} -- set back to default
+            for _, text_box in pairs(application.window.text_boxes) do
+                if text_box.type == "editable" then
+                    text_box.text = ""
+                end
+            end
             application.window.visible = false
         end
 
