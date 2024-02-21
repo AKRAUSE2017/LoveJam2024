@@ -68,7 +68,7 @@ function Button:clicked(application_name, application)
                 end
             end
             application.window.visible = false
-        end
+    end
 
         print(application.window.screens_display[1])
         print(application.window.screens_display[2])
