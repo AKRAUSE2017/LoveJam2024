@@ -31,8 +31,6 @@ function love.load() -- happens when the game starts
 
     background = love.graphics.newImage("assets/background.jpg")
 
-    logout_buttons = {}
-
     -- application for folder and file explorer
     applications["folder"] = {
         icon=Icon(10, 10, FOLDER_ICON_W, FOLDER_ICON_H, "Folder", love.graphics.newImage("assets/file_explorer/folder.png")),
@@ -79,9 +77,12 @@ function love.load() -- happens when the game starts
     }
 
     game_state = "dialog"
-    logout_buttons["exit_button"] = { 
-        logout = Logout(0, 695, 99, 26, "logging_out", love.graphics.newImage("assets/logout_button/WhiteLogoutButton.png"))
-    }
+    
+    logout = Logout(0, 695, 99, 26, "logging_out", love.graphics.newImage("assets/logout_button/WhiteLogoutButton.png"))
+
+    music = love.audio.newSource("assets/music/Song_2.wav", "stream")
+    music:setLooping(true)
+    music:play()
 end
 
 function love.resize(w,h)
@@ -138,9 +139,8 @@ function love.draw() -- render objects on scre n
 
     dialog:render()
 
-    for _,logout_button in pairs(logout_buttons) do
-        logout_button.logout:render()
-    end
+    logout:render()
+
     push:finish()
 end
 
@@ -183,11 +183,9 @@ function handle_mouse_click_window(mouse)
 end
 
 function handle_mouse_click_logout(mouse)
-    for _, logout_button in pairs(logout_buttons) do
-        if utils_collision(logout_button.logout, mouse) then
-            -- love.event.quit()
-            print("logout button clicked")
-        end
+    if utils_collision(logout, mouse) then
+        -- love.event.quit()
+        print("logout button clicked")
     end
 end
 
@@ -198,10 +196,11 @@ function love.mousepressed() --  double click
         
         handle_mouse_click_icon(mouse)
         handle_mouse_click_window(mouse)
+        handle_mouse_click_logout(mouse)
     end
 end
 
-function love.update() -- runs every frame
+function love.update(dt) -- runs every frame
     if dialog.active then game_state = "dialog" end
 
     local mouse = utils_get_mouse_data(scale_x, scale_y) -- returns {button_1, button_2, x, y, w=1, h=1}
