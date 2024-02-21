@@ -82,7 +82,7 @@ function Button:clicked(application_name, application)
                 end
             end
             application.window.visible = false
-        end
+    end
 
     end
 end

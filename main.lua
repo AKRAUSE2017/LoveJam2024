@@ -10,6 +10,7 @@ require('classes.window')
 require('classes.button')
 require('classes.text_box')
 require('classes.dialog')
+require('classes.logout')
 
 function love.load() -- happens when the game starts
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -29,6 +30,8 @@ function love.load() -- happens when the game starts
     applications = {}
 
     background = love.graphics.newImage("assets/background.jpg")
+
+    logout_buttons = {}
 
     -- application for folder and file explorer
     applications["folder"] = {
@@ -56,7 +59,7 @@ function love.load() -- happens when the game starts
         )
     } 
 
-    -- -- application for web browser (name pending) application
+    -- -- application for web browser (name pending) 
     applications["web"] = {
        icon=Icon(10, 160, WEB_ICON_W, WEB_ICON_H, "Web", love.graphics.newImage("assets/web/web_icon.png")),
        window=Window(50, 50, VIRTUAL_WIDTH-100, VIRTUAL_HEIGHT-100, "Web", love.graphics.newImage("assets/web/web_window.png"),
@@ -76,6 +79,9 @@ function love.load() -- happens when the game starts
     }
 
     game_state = "dialog"
+    logout_buttons["exit_button"] = { 
+        logout = Logout(0, 695, 99, 26, "logging_out", love.graphics.newImage("assets/logout_button/WhiteLogoutButton.png"))
+    }
 end
 
 function love.resize(w,h)
@@ -117,7 +123,7 @@ function love.keypressed(key)
     end
 end
 
-function love.draw() -- render objects on screen
+function love.draw() -- render objects on scre n
     push:start()
 
     love.graphics.draw(background, 0, 0, 0, 0.75)
@@ -125,12 +131,16 @@ function love.draw() -- render objects on screen
     for _, application in pairs(applications) do
         application.icon:render()
     end
+    
     for _, application in pairs(applications) do
         application.window:render()
     end
 
     dialog:render()
 
+    for _,logout_button in pairs(logout_buttons) do
+        logout_button.logout:render()
+    end
     push:finish()
 end
 
@@ -168,6 +178,15 @@ function handle_mouse_click_window(mouse)
             else 
                 text_box.active = false 
             end
+        end
+    end
+end
+
+function handle_mouse_click_logout(mouse)
+    for _, logout_button in pairs(logout_buttons) do
+        if utils_collision(logout_button.logout, mouse) then
+            -- love.event.quit()
+            print("logout button clicked")
         end
     end
 end
