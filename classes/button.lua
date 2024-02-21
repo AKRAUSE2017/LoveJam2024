@@ -31,13 +31,21 @@ function Button:clicked(application_name, application)
         if self.name == "folder_btn_1" then
             print("folder button clicked")
         end
+
+        if self.name == "file_explorer_close" then
+            application.window.visible = false
+        end
     end
 
     if application_name == "email" then
         if self.name == "email_button_inbox" then
-            application.window.screens_display = {1, 0}
+            application.window.image = love.graphics.newImage("assets/email/email_window.png")
         elseif self.name == "email_button_outbox" then
-            application.window.screens_display = {0, 1}
+            application.window.image = love.graphics.newImage("assets/email/email_window_outbox.png")
+        end
+
+        if self.name == "email_close" then
+            application.window.visible = false
         end
     end
 
@@ -60,6 +68,12 @@ function Button:clicked(application_name, application)
             self.visible = true
         end
 
+        if self.name == "web_bookmark" then
+            application.window.text_boxes[1].text = CORP_DATA_PORTAL
+            application.window.screens_display = {0, 0, 1, 0}
+            application.window.buttons[2].visible = true
+        end
+
         if self.name == "web_close" then
             application.window.screens_display = {1, 0, 0, 0} -- set back to default
             for _, text_box in pairs(application.window.text_boxes) do
@@ -70,10 +84,5 @@ function Button:clicked(application_name, application)
             application.window.visible = false
     end
 
-        print(application.window.screens_display[1])
-        print(application.window.screens_display[2])
-        print(application.window.screens_display[3])
-        print(application.window.screens_display[4])
-        print("=================")
     end
 end

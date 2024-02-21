@@ -45,6 +45,7 @@ function TextBox:submit(application_name, application)
         if application_name == "web" then
             if self.text == CORP_DATA_PORTAL then
                 application.window.screens_display = {0, 0, 1, 0}
+                application.window.buttons[2].visible = true
             end
         end
 
