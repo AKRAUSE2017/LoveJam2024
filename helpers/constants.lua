@@ -18,3 +18,4 @@ ICON_NAME_OFFSET = 10
 DOUBLE_CLICK_THRESHOLD = 0.05
 
 CORP_DATA_PORTAL = "www.corpdataportal.com"
+ECHELON_UNKNOWN = "www.echelon-unknown.com"

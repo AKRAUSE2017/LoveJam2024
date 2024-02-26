@@ -29,9 +29,9 @@ function Icon:set_state(mouse_data, last_mouse_data)
         self.state = "idle"
     end
 
-    if utils_collision(self, mouse_data) and mouse_data.button_1 and (not (last_mouse_data.x == mouse_data.x)) and (not (last_mouse_data.y == mouse_data.y)) then
-        self.state = "attached"
-    end
+    -- if utils_collision(self, mouse_data) and mouse_data.button_1 and (not (last_mouse_data.x == mouse_data.x)) and (not (last_mouse_data.y == mouse_data.y)) then
+    --     self.state = "attached"
+    -- end
 end
 
 function Icon:update(mouse_data)
