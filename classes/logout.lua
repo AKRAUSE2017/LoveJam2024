@@ -17,10 +17,9 @@ end
 
 function Logout:render()
     love.graphics.setColor(0/255, 255/255, 255/255)
-    love.graphics.rectangle("fill", 0, 695, 1700, 75)
+    love.graphics.rectangle("fill", 0, 690, 1700, 75)
 
     love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.draw(self.image, self.x, self.y)
     love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
-
 end

@@ -17,6 +17,13 @@ function utils_collision(obj1, obj2)
     return collX and collY
 end
 
+function utils_inside(obj1, obj2)
+    local obj2_right = obj2.x + obj2.w
+    local obj2_bottom = obj2.y + obj2.h
+
+    return obj2.x >= obj1.x and obj2_right <= obj1.x + obj1.w and obj2.y >= obj1.y and obj2_bottom <= obj1.y + obj1.h
+end
+
 function utils_get_mouse_data(window_scale_x, window_scale_y)
     x, y = love.mouse.getPosition()
     local mouse_data = {button_1=love.mouse.isDown(1), button_2=love.mouse.isDown(2), x=x*window_scale_x, y=y*window_scale_y, w=1, h=1}
